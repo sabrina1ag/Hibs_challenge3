@@ -1,12 +1,37 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 from utils import load_mhd_file, process_coordinates_and_file
+import joblib
+
+def process_coordinates_and_file(mhd_file, x, y, z, selected_model):
+    # Charger le modèle correspondant
+    if selected_model == "GLCM":
+        model = joblib.load("glcm_model.pkl")
+    elif selected_model == "Local Binary Pattern":
+        model = joblib.load("lbp_model.pkl")
+    elif selected_model == "Histogram of gradients":
+        model = joblib.load("hog_model.pkl")
+    elif selected_model == "Gabor et Hu Moments":
+        model = joblib.load("gabor_hu_model.pkl")
+    elif selected_model == "CNN3D":
+        model = joblib.load("cnn3d_model.pkl")
+
+    # Exemple de prétraitement des données mhd_file et des coordonnées (à remplacer par ton propre prétraitement)
+    processed_data = preprocess_data(mhd_file, x, y, z)
+
+    # Faire la prédiction
+    prediction = "Dummy Prediction"  # Juste pour tester l'interface, tu devras remplacer cela par la vraie prédiction
+
+    return prediction
 
 # Fonction fictive de prétraitement des données
 def preprocess_data(mhd_file, x, y, z):
     # Cette fonction est vide pour l'instant
     # Tu devras implémenter le vrai prétraitement des données ici
     pass
+
+# Ligne vide pour éviter l'erreur de Streamlit
+placeholder = None
 
 # sidebar for navigation
 with st.sidebar:
